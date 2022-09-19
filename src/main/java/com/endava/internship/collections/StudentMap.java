@@ -95,6 +95,8 @@ public class StudentMap implements Map<Student, Integer> {
     }
 
     private Node insert(Node root, Node newNode) {
+        if (newNode == null)
+            return root;
         if (root == null) {
             root = new Node(newNode.getKey(), newNode.getValue());
             size++;
@@ -145,11 +147,14 @@ public class StudentMap implements Map<Student, Integer> {
         if (head.getKey().equals(o)) {
             value = head.getValue();
             Node newHead = head.getLeft();
-            Node rightNode = newHead.getRight();
-            newHead.setRight(head.getRight());
+            Node rightNode = head.getRight();
+//            newHead.setRight(head.getRight());
             head = newHead;
             head = insert(head, rightNode);
-            size -= 2;
+            if (rightNode == null)
+                size--;
+            else
+                size-=2;
             return value;
         }
 
